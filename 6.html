@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>자바스크립트 함수 업그레이드하기( Default Parameter / arguments )</title>
+</head>
+<body>
+  <h1>자바스크립트 함수 업그레이드하기( Default Parameter / arguments )</h1>
+
+  <script>
+
+    // 만약에 b에 아무값도 없을 경우에는 10을 넣어주세요. ( Default 파라미터 )
+    function sum(a, b = 10) {
+      console.log(a + b);
+    }
+
+    sum(1, 2);
+
+    // 연산자를 넣어도 가능합니다.
+    function sum2(a, b = 10 * a) {
+      console.log(a + b);
+    }
+
+    sum2(3);
+
+    // 함수를 사용 할 수도 있습니다.
+    function sum3(a, b = func()) {
+      console.log(a + b);
+    }
+
+    sum3(3);
+
+    function func() {
+      return 10;
+    }
+
+    // 함수의 arguments ( 파라미터를 아규먼츠라고 부릅니다. )
+    function sum4 (a, b, c) { // 파라미터
+      console.log(a, b, c); // 아규먼츠
+      console.log(arguments); // 모든 파라미터를 []안에 넣은 변수
+      console.log(arguments[0]); // 1
+      console.log(arguments[1]); // 2
+      console.log(arguments[2]); // 3
+      console.log(...arguments); // 1 2 3
+
+      for (var i = 0; i < arguments.length; i++) {
+        console.log(arguments[i]);
+      }
+
+    }
+
+    sum4(1, 2, 3);
+
+    // a, b, c 파라미터만 콘솔창에 출력하고 싶을때 ( 반복문을 돌릴 경우 ) temporary는 있을때가 있고 없을때가 있는 경우
+    // Rest 파라미터
+    // function sum4 (temporary, a, b, c) { // 파라미터
+    //   for (var i = 0; i < arguments.length; i++) {
+    //     console.log(arguments[i]);
+    //   }
+    // }
+    // sum4(1, 2, 3);
+    // rest의 이름은 아무렇게나 지어도 됩니다.
+    // Rest 파라미터: ...rest 자리에 오는 모든 파리미터를 []에 보관해줍니다.
+    // 아래처럼 사용하면 a, b만 빼고 그 이후에 오는 파라미터만 담아줍니다.
+    // Spread Operater와의 차이점
+    /*
+      ** 함수 파리미터 자리에 붙으면 Rest이고 나머지 경우에는 Spread입니다.
+    */
+    function sum5 (a, b, ...rest) {
+      console.log(rest);
+    }
+    sum5(1, 2, 3, 4, 5, 6);
+
+    // rest 파라미터는 가장 뒤에 사용해야 합니다. 뒤에 오면 에러. 두번 이상 쓰면 에러.
+    function sum6 (...rest) {
+      console.log(rest);
+
+      for(var i = 0; i < rest.length; i++) {
+        console.log(rest[i])
+      }
+    }
+
+    sum6(1, 2, 3, 4);
+  </script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!-- this에 관한 내용입니다. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tihs 키워드에 대하여.</title>
+</head>
+<body>
+
+  <h1>this 키워드에 대하여.</h1>
+  <p>
+    1. 그냥 사용하거나 일반 함수 안에서 사용하면 { window }를 가리킵니다.<br />
+    2. 오브젝트 내 함수안에서 사용하면 그 함수를 가지고 있는 오브젝트를 가리킵니다.<br />
+    <span style="color: red;">**</span> 함수나 변수를 전역스코프에서 생성하면 { window }에 보관이 됩니다.<br />
+    예시: function func () { console.log(this); };<br />
+    함수를 불러올 때, func(); or window.func();로도 불러올 수 있습니다.<br />
+    <br />
+    3. constructor안에서 사용하면 constructor로 새로생성되는 오브젝트를 가리킵니다.<br />
+    4. EventListener내부에서 사용하면 e.currentTarget와 같은 의미입니다.
+  </p>
+
+  <div>
+    <button id="btn">버튼 클릭</button>
+  </div>
+  
+  <script>
+    // this키워드는 뜻이 3 ~ 4가지가 있습니다.
+
+    // 1. 그냥 쓰거나 일반 함수 안에서 쓰면 window를 가리킵니다.
+    console.log(this); // window
+
+    function func () {
+      console.log(this); // window
+    };
+    func();
+
+    // 2. use strict ( 엄격 모드 )를 사용하면 조금 달라집니다. [ use strict는 script 바로 아래에 써줘야 적용됩니다. ]
+    'use strict';
+    console.log(this); // window
+
+    function func () {
+      console.log(this); // undefined
+    };
+    func();
+
+    // 3. object 내 함수 안에서 쓰면 나를 포함하고 있는 object를 가리킵니다.
+    // 오브젝트 안에 있는 함수는 메서드라고 한다.
+    var obj = {
+      data: "Jun",
+      abc: function () {
+        console.log(this); // obj
+      }
+    }
+    obj.abc();
+
+    // 4. object 내 object 내부에 함수를 쓰면 object.data를 가리킵니다.
+    var obj2 = {
+      data: {
+        abc: function () {
+          console.log(this); // obj2.data
+        }
+      }
+    };
+    obj2.data.abc();
+
+    // 5. Arrow Function을 사용하면 상위요소가 가지고 있던 this를 가리킵니다.
+    var obj3 = {
+      data: {
+        abc: () => {
+          console.log(this); // window
+        }
+      }
+    };
+    obj3.data.abc();
+
+    // 6. object 안에 함수넣을 때 신문법 ( function을 생략해도 사용할 수 있습니다. )
+    var obj4 = {
+      data: {
+        func () {
+          console.log(this); // obj4.func
+        }
+      }
+    }
+    obj4.data.func();
+
+    // 7. constructor에서 사용하면 새로 생성되는 오브젝트인 instance를 가리킵니다.
+    function func2 () {
+      this.name = "Jun"; // this = instance( 새로 생성되는 오브젝트 )
+    }
+
+    var obj5 = new func2();
+    console.log(obj5); // { name: "Jun" }
+
+    // 8. EventListener에서 사용하면 e.currentTarget를 가키립니다. ( 지금 이벤트가 동작하는 곳 )
+    // id가 btn인걸 찾아서 클릭하면 function을 실행해달라
+    document.getElementById("btn").addEventListener("click", function (e) {
+      console.log(this);
+      console.log(e.currentTarget);
+    })
+
+    // EventListener에 .forEach 메서드 안에서 반복문을 돌려서 사용하면 window를 가리킵니다.
+    document.getElementById("btn").addEventListener("click", function (e) {
+      var arr = [1, 2, 3, 4];
+
+      // 콜백함수 ( 함수 안에서 함수를 사용할 때 )
+      arr.forEach(function(a) {
+        console.log(a);
+        console.log(this); // window
+      })
+      for(let i = 0; i < arr.length; i++) {
+        console.log("THIS", this); // e.currentTarget을 가리킵니다.
+      }
+    })
+
+    // 9. 오브젝트 내부 함수의 안에서 .forEach 메서드 안에서 반복문을 돌려서 사용하면 window를 가리킵니다.
+    var obj6 = {
+      name: ["Jun", "Hyeok", "Khan"],
+      func: function () {
+        console.log(this); // obj6를 가리킵니다.
+        // forEach내부에 있는 function () {}은 일반함수이기 때문에 window를 가리킵니다.
+        obj6.name.forEach(function () {
+          console.log(this);
+        })
+        // Arrow Function을 사용하면 obj6를 가리킵니다. ( 내부의 this값을 변화시키지 않습니다. [ 외부 this갑 그대로 재사용이 가능합니다. ])
+        obj6.name.forEach(() => {
+          console.log(this);
+        })
+        // for문은 함수가 아니기 때문에 Arrow Function과 마찬가지로 obj6를 가리킵니다.
+        for (let i = 0; i < obj6.name.length; i++) {
+          console.log("FOR", this);
+        }
+      }
+    };
+    obj6.func();
+
+
+    // TEST -----------------------------------------------------------
+    var peoples = {
+      name: "손흥민",
+      sayHi: function () {
+        console.log("안녕 나는", this.name);
+      }
+    }
+
+    peoples.sayHi();
+
+    var datas = {
+      data: [1, 2, 3, 4, 5],
+      dataSum: function () {
+        var sum = 0;
+
+        this.data.forEach(el => {
+          sum += el;
+        })
+        console.log(sum);
+      }
+    }
+
+    datas.dataSum();
+
+    function timeout () {
+      console.log("Set Time Out");
+    }
+
+    // 1번 방법과 2번 방법이 있습니다. 2번 방법에 콜백함수자리에 내가 만들어둔 함수를 입력하려면 ()는 빼야 합니다.
+    setTimeout(function () { console.log("Set Time Out!"); }, 1000);
+    setTimeout(timeout, 1000);
+
+  </script>
+</body>
+</html>

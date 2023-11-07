@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>테스트</title>
+</head>
+<body>
+
+  <button id="btn">버튼</button>
+  <script>
+    document.getElementById("btn").addEventListener("click", function () {
+      console.log(this.innerHTML);
+
+      var b = this;
+      // 기본
+      setTimeout(function () { console.log(b.innerHTML + "2초 뒤"); }, 2000);
+
+      // Arrow Function을 이용하기
+      setTimeout(() => console.log(this.innerHTML + "1초 뒤"), 1000);
+    });
+  </script>
+</body>
+</html>

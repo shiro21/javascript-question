@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>변수에 대하여( var, let, const ) + 호이스팅</title>
+</head>
+<body>
+  <h1>변수에 대하여( var, let, const )</h1>
+  <p>변수란: 변수 이름에 값을 저장하는 것.</p>
+  <p>변수의 특징: 선언, 할당, 범위가 있습니다.</p>
+  <p>var의 특징: 재선언O, 재할당O, 범위: function입니다.( 함수 레벨 스코프 )</p>
+  <p>let의 특징: 재선언X, 재할당O, 범위: block입니다.( 블록 레벨 스코프 )</p>
+  <p>const의 특징: 재선언X, 재할당X, 범위: block입니다.( 블록 레벨 스코프 )</p>
+
+  <p>재선언예시<br />var name = "jun"<br />var name = "new"</p>
+  <p>재할당예시<br />let name = "jun"<br />name = "new"</p>
+  <p>재할당예시2<br />const people = { name: "Jun" }<br />people.name = "Park";<br />const로 object를 만들었을 때, 오브젝트 내부 값을 변경해도 에러가 나지 않습니다.( 값을 변경했을 뿐이고, 재할당한게 아닙니다. )<br />바꿀 수 없는 object를 만드려면 Object.freeze(people); 로 수정불가능하게 만들 수 있습니다.</p>
+  <p>범위예시<br />function func() { var name = "Jun" } var는 function내부에서 만들었을 경우 function내부에서만 사용할 수 있습니다.</p>
+  <p>범위예시2<br />if() { let name = "Jun"}<br />for (let i = 0; i < 5; i++) {}; let과 const는 var보다 범위가 더 좁습니다. {} 중괄호 내부에서 만들었을 때, 중괄호 내부에서만 사용할 수 있습니다.</p>
+  
+  <p>
+    호이스팅<br />
+    변수를 생성했을 때, 호이스팅이라는 현상이 일어납니다.<br />
+    <pre>
+      ex )
+      function func() { console.log("123") }
+
+      if( 1 === 1 ) { console.log(true) }
+
+      var age = 30;
+
+      <span style="color: red;">위와 같은 내용이 있을때 아래처럼 변수를 범위 맨위로 끌고오게 됩니다.</span>
+
+      var age;
+
+      function func() { console.log("123") }
+
+      if( 1 === 1 ) { console.log(true) }
+
+      age = 30;
+    </pre>
+  </p>
+
+  <p>
+    전역변수 or 지역변수<br />
+    <pre>
+      var age = 30; // 전역변수
+      window.name = "Jun" // window 전역변수 만들기
+      console.log(name); // Jun
+      console.log(window.name); // Jun
+
+      function func () {
+        var newAge = 31; // 지역변수
+        console.log(age); // 30
+      }
+
+      func();
+    </pre>
+  </p>
+  
+  <script>
+
+  </script>
+</body>
+</html>

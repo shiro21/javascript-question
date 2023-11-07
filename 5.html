@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spread Operater</title>
+</head>
+<body>
+  <script>
+    // Spread Operater는 괄호 안에서만 사용할 수 있습니다. 함수(), 오브젝트{}, 배열[]
+
+
+    var arr = ["Hello", "World"];
+
+    // Array에 붙이면 대괄호를 제거해줍니다.
+    console.log(arr); // ['Hello', 'World']
+    console.log(...arr); // Hello World
+
+    var str = "Hello";
+    console.log(str); // Hello
+    console.log(...str); // H e l l o
+
+    // 배열 합치기
+    var a = [1, 2, 3];
+    var b = [4, 5];
+
+    var c = [...a, ...b];
+    var c1 = a.concat(b);
+    console.log(c);
+    console.log(c1);
+
+    /*
+      Spread Operater를 사용해서 Deep Copy하기
+    */
+    
+    var x = [1, 2, 3];
+    var y = x;
+
+    x[3] = 4;
+    console.log(x); // [1, 2, 3, 4]
+    console.log(y); // [1, 2, 3, 4] y에는 4를 추가한적이 없는데 4가 추가됩니다. reference data type( Array, Object )들은 이런 자료형들은 값을 공유합니다.
+
+    // 독립적인 값을 갖도록 복사하는 방법
+    var xx = [1, 2, 3];
+    var yy = [...xx];
+
+    xx[3] = 4;
+    console.log(xx); // [1, 2, 3, 4]
+    console.log(yy); // [1, 2, 3]
+
+    // 오브젝트에서 Deep Copy하기 ( 간단하게 중괄호, 대괄호를 벗겨서 넣어라 )
+    var obj1 = { a: 1, b: 2 };
+    var obj2 = { ...obj1, c: 3 };
+    
+    console.log(obj1); // {a: 1, b: 2}
+    console.log(obj2); // {a: 1, b: 2, c: 3}
+
+    // 값 중복이 일어났을 때
+    var ob1 = { a: 1, b: 2 };
+    var ob2 = { a: 2, ...ob1 };
+    var ob3 = { ...ob1, a: 2 };
+
+    console.log(ob2); // {a: 1, b: 2} 중복되면 가장 뒤에 있는걸 적용시켜줍니다.
+    console.log(ob3); // {a: 2, b: 2} 중복되면 가장 뒤에 있는걸 적용시켜줍니다.
+
+
+    /*
+      함수 파라미터를 넣을 때
+    */
+
+    function sum(a, b, c) {
+      console.log(a + b + c);
+    }
+
+    sum(1, 2, 3);
+    var sumArr = [10, 20, 30];
+    sum(sumArr[0], sumArr[1], sumArr[2]); // 가장기초
+    sum.apply(undefined, sumArr); // 옛날방식 ( .apply를 사용했기 때문에 배열을 넣을 수 있습니다. undefined는 비워두면 문제가 생기기 때문에 아무 값이나 넣은 것입니다. )
+    sum(...sumArr); // 최신방식
+
+    /*
+      .apply, .call 함수에 대하여
+    */
+    
+    var person = {
+      name: "asd",
+      hay: function () {
+        console.log(this.name + "Hello");
+      }
+    }
+
+    var person2 = {
+      name: "Jun"
+    }
+    // person의 hay()함수를 가져와서 사용했다고 봐도 무방합니다. apply와 call의 다른점은 파라미터를 apply는 array형태로 집어넣을수 있고, call은 기본형태로 넣을수있습니다.
+    // ex ) person.hay.apply(person2, [1, 2]); person.hay.call(person2, 1, 2);
+    person.hay(); // asdHello
+    person.hay.apply(person2); // JunHello
+    person.hay.call(person2); // JunHello
+  </script>
+</body>
+</html>

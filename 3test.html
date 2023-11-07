@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>변수 문제</title>
+</head>
+<body>
+
+  <div style="display: none;">모달0</div>
+  <div style="display: none;">모달1</div>
+  <div style="display: none;">모달2</div>
+
+  <button>버튼0</button>
+  <button>버튼1</button>
+  <button>버튼2</button>
+  <script>
+    // func();
+    // function func() {
+    //   console.log(hay);
+    //   let hay = "Hello";
+    // }
+    // /*
+    //   에러가 일어납니다.
+    //   함수는 실행이 되지만 let 변수는 호이스팅이 되지만 undefined라는 값이 할당되지 않습니다.
+    //   선언과 할당 사이에 시간차가 있기 떄문에 그렇고 이를 TDZ 템포러리 데드 존이라고 합니다.
+    // */
+
+    // func2();
+    // var func2 = function () {
+    //   console.log(hay);
+    //   var hay = "Hello";
+    // }
+    // /*
+    //   에러가 일어납니다.
+    //   var func2를 변수만드는 것처럼 함수를 선언과 할당하고 있습니다.
+    //   이렇게 함수를 만들어도 호이스팅이 되지만 변수의 선언부분만 되기 때문입니다.
+    //   변수 선언부분만 맨 위로 끌어올려지게 되는데 변수는 현재 함수가 아니기 때문에 실행되지 않습니다.( 함수가 아닌 변수에 ()를 붙였다고 함수가 아니라고 에러를 일으킵니다. )
+    // */
+    
+    // let a = 1;
+    // // 1번 경우
+    // var func3 = function () {
+    //   a = 2;
+    // }
+    // // 2번 경우
+    // console.log(a);
+    // /*
+    //   a는 1이 출력됩니다.
+    //   a는 1이라는 변수를 만들고 함수를 만들어서 a = 2라고 변경했지만, 함수를 정의만하고 실행하지 않았기 때문에 a = 2라는 코드는 없는 코드와 마찬가지이기 때문에 1이 출력됩니다.
+    //   만약에 1번에 func3()을 출력하면 에러가 나올것이고( 함수가 되기 전이기 때문에 func2와 같은 현상 ), 2번에 func3()을 출력하면 a는 2가 되었을겁니다.
+    // */
+
+    // let abc = 1;
+    // var bcd = 2;
+    // window.abc = 3;
+    // window.bcd = 4;
+
+    // console.log(abc + bcd);
+    // /*
+    //   콘솔은 5가 출력됩니다.
+    //   abc는 1이 출력되고, bcd는 4가 출력됩니다.
+    //   bcd는 둘다 var를 사용했다고 봐도 무방합니다. 그렇기 떄문에 bcd는 4로 재할당이 되었다고 보면 됩니다.
+    //   a는 let 변수로 1을 할당하고 글로벌 변수로 3을 할당했습니다. 이 경우는 a를 사용했을 때 조금 더 범위가 작고 가까운 1을 참조해서 사용하게 됩니다.
+    // */
+
+    // for (var i = 1; i <= 5; i++) {
+    //   setTimeout(function () { console.log(i); }, i * 1000);
+    // }
+
+    // /*
+    //   setTimeout()는 반복문과 동시에 실행되지 않습니다. i초 이후에 실행해주세요와 같습니다. 이렇게 반복문이 끝납니다.
+    //   반복문이 끝나고 setTimeout내의 console.log(i)가 1초후 2초후... 실행됩니다.
+    //   그런데 i를 채워넣고 싶은데, i값은 5밖에 없습니다. 왜냐하면 반복문이 실행되면서 i값은 1, 2, 3, 4, 5 이렇게 차례로 변하다가 i값은 5가 되어 최종 종료되었습니다.
+    //   그리고 i값은 var로 만든 전역변수입니다.
+    //   그래서 i값을 쓰려고 봤을때 i = 5밖에 남지 않아서 5를 집어넣어 계속 실행하게 되는 것입니다.
+
+    //   해결방법은 for 반복문을 만들때 var대신 let을 넣어주는 방법입니다.
+    //   let변수는 블록 레벨 스코프로 for반복문도 해당이 됩니다.
+    //   그럼 이제 1초후에 console.log(i)가 실행될 때 i값을 채우려고 보면 i값이 for반복문 내에 남아있기 때문에 그걸 가져다 쓰게 됩니다.
+    //   그러면 var를 사용할때 처럼 5를 출력하는 것이 아닌 1, 2, 3, 4, 5를 출력해줍니다.
+    // */
+
+    var buttons = document.querySelectorAll("button");
+    var modals = document.querySelectorAll("div");
+
+    console.log(buttons)
+    console.log(modals)
+    for (var i = 0; i < 3; i++) {
+      buttons[i].addEventListener("click", function () {
+        modals[i].style.display = "block";
+      });
+    }
+
+    /*
+      i가 0부터 3이 되기 전까지 반복해달라는 내용입니다.
+      내부 코드는 addEventListener()입니다. 클릭되면 콜백함수 내부를 실행해 달라는 코드입니다. 그래서 반복문과 동시에 실행되지 않습니다. 클릭되면 실행됩니다.
+
+      이제 누군가 button을 클릭하면 addEventListener 내의 코드가 실행됩니다.
+      그런데 i를 쓰고 싶어서 주변을 보니 i값은 3밖에 없습니다. 반복문이 3번 실행되면서 i값은 0, 1, 2, 3이 되어 3으로 종료하게 되었습니다.
+      그리고 i값은 var로 만든 전역변수입니다. 그렇기 때문에 i값을 쓰려고 봤더니 전역변수 i = 3밖에 없어서 3을 집어넣어 에러가 발생하게 된 것입니다.
+
+      해결방법은 for 반복문에 var대신 let을 넣어주는 방법입니다.
+      let 변수는 블록 레벨 스코프로 for반복문도 해당이 됩니다.
+      그럼 이제 반복문이 돌고 나서도 let i = ? 값이 for반복문 내에 남아있기 떄문에 그걸 i값으로 가져다 쓰게됩니다.
+    */
+  </script>
+</body>
+</html>

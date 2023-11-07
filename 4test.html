@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tagged literal 문제</title>
+</head>
+<body>
+  <script>
+    var pants = 20;
+    var socks = 100;
+
+    // 바지20 양말100 => 양말20 바지100으로 바꿔주기
+    function analyzer (str, var1, var2) {
+      console.log(str[1] + var1 + str[0] + var2);
+    }
+
+    analyzer`바지${pants} 양말${socks}`;
+
+
+    var pants = 20;
+    var socks = 100;
+
+    // 바지20 양말100 => 바지다팔렸어요 양말100
+    function analyzer2 (str, var1, var2) {
+
+      var1 = 0;
+      
+      if (var1 === 0) {
+        console.log("바지다팔렸어요" + str[1] + var2);
+      }
+    }
+
+    analyzer2`바지${pants} 양말${socks}`;
+  </script>
+</body>
+</html>

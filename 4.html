@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Template literals</title>
+</head>
+<body>
+  <h1>Template literals( Strings )</h1>
+
+  <h1>Tagged literal</h1>
+  <p>함수와 백틱을 같이 사용</p>
+  <script>
+    // 백틱을 사용한 문자열
+    /*
+      장점
+      1. 엔터를 사용할 수 있다.
+      2. 중간에 변수 넣기가 쉽다.
+    */
+    var name = "준혁"
+    var str = `안녕하세요 ${name}`;
+
+    console.log(str);
+
+    function func () {
+      return 10;
+    }
+
+    // ()대신 백틱을 붙여서 실행가능 ( Tagged literal )
+    console.log(func`안녕하세요 ${name}`);
+    console.log(func``);
+
+    // 왜 위와같은 내용이 필요한가 ? ex )
+
+    function analyzer (str, variable, variable2) {
+      console.log(str); // 문자열들을 array형식으로 뽑아줍니다.
+      console.log(variable); // 변수를 뽑아줍니다. ( 변수 기준은 ${}입니다. )
+      console.log(variable2); // 두번째 변수가 있을 때
+
+      // tagged literal을 이용해서 글자의 순서를 바꾸고 싶을 때
+      console.log(`${str[1]} ${str[0]} ${variable}`);
+    }
+
+    analyzer`안녕하세요 ${name} 입니다.`;
+  </script>
+</body>
+</html>

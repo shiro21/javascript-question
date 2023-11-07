@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spread, rest 연습문제</title>
+</head>
+<body>
+  <script>
+    var a = [1, 2, 3];
+    var b = '김밥';
+    var c = [...b, ...a];
+
+    console.log(c); // 김, 밥, 1, 2, 3
+
+    var e = ['you', 'are'];
+    var d = function (a, e) {
+      console.log(...[e])
+      console.log([[...a], ...[...e]][1]);
+    }
+
+    d(a, e);
+
+    function func (a = 5, b = a * 2) {
+      console.log(a + b); // 9
+      return 10;
+    }
+
+    func(3)
+
+    function func2 (a = 5, b = a * 2) {
+      console.log(a + b); // 15
+    }
+
+    func2(undefined, undefined);
+
+    function arr(...rest) {
+      return rest
+    }
+
+    var newArray = arr(1, 2, 3, 4, 5);
+
+    console.log(newArray);
+
+    var numbers = [2,3,4,5,6,1,34,45,56,457,4];
+
+    console.log(Math.max(...numbers));
+
+    function arrSort ([...rest]) {
+      console.log(...rest.sort());
+    }
+
+    arrSort('bear');
+
+    function strLeng ([...rest]) {
+      let arr = {};
+
+      for (let i = 0; i < rest.length; i++) {
+        if (arr[rest[i]] > 0) {
+          arr[rest[i]] = arr[rest[i]] + 1;
+        } else {
+          arr[rest[i]] = 1;
+          console.log(arr[rest[i]])
+        }
+      }
+
+      console.log(arr);
+    }
+
+    strLeng("aasdasfeaffffffacbbb");
+  </script>
+</body>
+</html>
