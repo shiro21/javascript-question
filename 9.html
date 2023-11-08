@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>상속</title>
+</head>
+<body>
+  <h1>상속 사용법</h1>
+  <p>
+    prototype, function Student() {}들은 옛날 문법입니다. [2009년 문법]
+    이후부터 ES5로 넘어옵니다.
+    그 이후부터는 ES6로 넘어옵니다.
+  </p>
+
+  <script>
+    // ES5
+    // Object.create(PrototypeObject);
+    var parent = {
+      name: "Kim",
+      age: 50
+    };
+
+    /*
+      부모가 가진 name, age속성을 그대로 물려받는 object입니다. constructor랑 같은 내용 ( 엄밀히 이야기하면 Object.create()는 constructor는 아닙니다. constructor는 함수나 class로 가능합니다. )
+      child의 prototype을 정의하기만 했기 때문에 child를 불렀을때 아무것도 나오지 않습니다. ( {} ) 이렇게 객체만 나옵니다.
+      그런데 child.name을 부르면 "Kim"이 나옵니다.
+      이렇게 나오는 이유는 자식의 프로토타입을 부모로 두고 있기 때문에 나옵니다. ( child가 직접 가지고 있나 먼저 판단한 후에 없으면 parent가 가지고 있는지 확인합니다. )
+    */
+    var child = Object.create(parent);
+    // 아래처럼 주면 이제 자식의 나이는 {age: 10}이 출력됩니다. ( child를 불렀을 때 )
+    child.age = 10;
+
+    // 자식의 자식도 만들수있습니다.
+    var grandSon = Object.create(child);
+
+    console.log(grandSon.age); // 10
+
+    // ES6
+    class Parent2 {
+      constructor(name) {
+        this.name = "Kim";
+        // 자식이 직접 함수를 갖고 싶을때는 여기다가 입력을 해줍니다.
+        this.sayHi = function () {
+          console.log("Hello");
+        }
+      }
+      // 오브젝트에 추가되지 않고, 부모의 prototype에 추가됩니다.
+      // 부모의 프로토타입 유전자에 넣어두고 싶을때는 여기다가 넣습니다. 모든 자식들이 사용할 수 있는 공통내용
+      sayHi() {
+        console.log("부모의 Prototype에 추가된 내용");
+      }
+      sayHello() {
+        console.log("Hello");
+      }
+    }
+
+    Parent2.prototype.sayBye = function () {
+      console.log("또 하나 추가");
+    }
+
+    var child2 = new Parent2();
+    child2.sayHi(); // Hello
+    Parent2.prototype.sayHi(); // 부모의 Prototype에 추가된 내용
+    child2.__proto__.sayHi(); // 부모의 Prototype에 추가된 내용
+    // __proto__와 같은 내용. getPrototypeOf()가 조금 더 눈에 익는 방법입니다.
+    Object.getPrototypeOf(child2);
+
+    // class의 constructor에 파라미터 추가하기 constructor(name) <-- 이렇게 추가해줍니다.
+    var child3 = new Parent2("Jun");
+    // 객체지향 문법을 사용하는 이유는 object를 여러개 만들어 쓸 때
+
+  </script>
+</body>
+</html>

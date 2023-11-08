@@ -3,9 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>asd</title>
+  <title>Primitive / Reference Data Types</title>
 </head>
 <body>
-  
+  <script>
+    /*
+      Primitive Data Type ( 프리미티브 데이타 타입 ): 변수에 값이 그대로 저장이 됩니다.
+      Array, Object는 변수에 값이 저장되지 않습니다. ( reference가 저장됩니다. )
+      ex: )
+      [1, 2, 3, 4]가 저쪽에 있다는 화살표가 들어있습니다.
+      { name: "Jun" }이 저쪽에 들어있다는 화살표가 들어있습니다.
+      */
+    var a = "abc";
+    var arr = [1, 2, 3, 4];
+    var obj = { name: "Jun" };
+
+    // Primitive Data Type
+    var name1 = "Jun";
+    var name2 = name1;
+
+    console.log(name1); // Jun
+    console.log(name2); // Jun
+    name1 = "Kim";
+    
+    console.log(name1); // Kim
+    console.log(name2); // Jun
+
+    // Reference Data Type
+    /*
+      레퍼런스 데이타 타입은 name4에 name3이 저장되는 것이 아니라 { name: "Jun" } 자료가 메모리 어디에 있는지 화살표로 가리키고 있는 것이기 때문에 name3과 name4 둘다 Park으로 변경된 것입니다.
+    */
+    var name3 = { name: "Jun" };
+    var name4 = name3;
+
+    console.log(name3); // { name: "Jun" }
+    console.log(name4); // { name: "Jun" }
+
+    name3.name = "Park";
+
+    console.log(name3); // { name: "Park" }
+    console.log(name4); // { name: "Park" }
+
+    /*
+      내부 데이터가 같더라도 두개가 가리키는 화살표가 다르기 때문에 true가 아닙니다.
+      즉, obj1 == obj2 => 화살표1 == 화살표2 이런뜻과 같습니다. ( Array도 마찬가지 입니다. )
+    */
+    var obj1 = { name: "Jun" };
+    var obj2 = { name: "Jun" };
+
+    console.log(obj1 == obj2); // false
+
+    var obj3 = { name: "Jun" };
+
+    function objFunc (obj) {
+      obj.name = "Park";
+    }
+
+    objFunc(obj3); // { name: 'Park' }
+
+    /*
+      오브젝트를 재할당해주는 함수는 실패합니다.
+      파라미터는 변수생성 & 할당과 똑같습니다.
+      예를 들면 아래 내용은 이렇게 표현되는것과 같습니다.
+      EX: )
+      function objFunc2 (ob) {
+        ob = { name: "Alice" }; // 새로운 오브젝트가 생성된 것입니다.
+      }
+
+      objFunc2(var ob = obj3); // 즉 얘도 화살표를 가리키고 있습니다.
+
+      즉, obj3 이라는 화살표가 하나 있었고, ob라는 화살표를 하나더 생성하게 된 것입니다.
+    */
+    function objFunc2 (ob) {
+      ob = { name: "Alice" };
+    }
+
+    objFunc2(obj3); // { name: 'Park' }
+  </script>
 </body>
 </html>

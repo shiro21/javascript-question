@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>extends & super / getter와 setter</title>
+</head>
+<body>
+  <h1>extends & super / getter와 setter</h1>
+
+  <p>
+    extends는 만든 class와 유사한 내용을 가진 class를 하나 더 만들때 사용합니다. ( 상속 한다고 생각하면 됩니다. )<br />
+    그냥 하드코딩으로 만들수도있지만, 복사/상속할 값들이 많으면 힘들기 때문에 extends로 class를 복사합니다.
+  </p>
+
+  <p>
+    getter: 데이터를 꺼내 쓸 때, 데이터를 꺼내서 쓸 수 있는 방법을 미리 정의합니다. 미리 정의하면 데이터를 편리하게 사용할 수 있습니다.<br />
+    결국 getter나 setter도 새로 뽑힌 오브젝트들 내용을 편리하게 수정할 때 사용합니다. 굳이 get/set 키워드가 없어도 크게 문제는 없습니다.
+  </p>
+  <script>
+    class GrandFather {
+      constructor(name) {
+        this.firstName = "Kim";
+        this.name = name;
+      }
+      sayHi() {
+        console.log("할아버지 하이");
+      }
+    }
+
+    var grandFather1 = new GrandFather("만수");
+
+    class Father extends GrandFather {
+      constructor(name) {
+        // GrandFather의 내용을 그대로 가져다 달라는 내용과 같습니다. --> this.firstName, name을 가져와 달라는 내용입니다.
+        // 여기서 super()는 부모 class의 constructor를 의미합니다.
+        super(name);
+        this.age = 50;
+      }
+      sayHi() {
+        console.log("아빠 하이");
+        // 이런식으로 super를 사용할 수 있습니다.
+        // 여기서 super()는 부모 class의 prototype을 의미합니다.
+        super.sayHi();
+      }
+    }
+
+    var father1 = new Father("만혁");
+    father1.sayHi(); // Father 클래스에 sayHi()가 없으면 GrandFather 클래스에 sayHi()를 가져옵니다.
+
+    var people = {
+      name: "Jun",
+      age: 30,
+      nextAge: function () {
+        return this.age + 1;
+      },
+      setAge(age) {
+        // parseInt() 숫자로 바꿔줍니다. 이렇게 안전장치를 걸어줄 수 있습니다. 즉, 데이터를 꺼내거나 / 수정하거나 할때 편리하고, 실수를 방지하고, 관리가 가능합니다.
+        return this.age = parseInt(age);
+      },
+      // set을 붙이면 소괄호를 뺄 수 있습니다. ( set은 데이터를 변경하는 함수에 사용합니다. )
+      set setAge2(age) {
+        return this.age = parseInt(age);
+      },
+      // getter, setter 사용할때는 get nextAge2: function() {}으로 사용할 수 없습니다.
+      get getAge2() {
+        return this.age + 1;
+      }
+    }
+
+    // 이렇게 단순하게 만드는 내용일떄는 별반 다를게 없습니다. 
+    people.age + 1; // 31
+    people.nextAge(); // 31
+
+    /*
+      하지만 아래처럼 사용할때는 매우 유용할 수 있습니다.
+      
+      함수를 만들어 object 데이터를 다루는 이유
+      1. 자료가 복잡해졌을때 사용하면 매우 유용합니다.
+      2. object 자료 수정시에 매우 유용합니다.
+    */
+
+    // 데이터 수정시 실수 줄일 수 있습니다.
+    // 예를들어 아래처럼 20을 "20" 이렇게 String으로 보냈을 경우 setAge()에서 확인할 수 있도록 만들어 줄 수 있습니다.
+    people.setAge(20);
+
+    // 함수앞에 set을 붙였을 경우 ()를 빼고 = 으로 표현할 수 있습니다.
+    people.setAge2 = "20";
+    // 함수 앞에 get을 붙였을 경우 ()를 뺄 수 있습니다.
+    people.getAge2;
+
+    // get과 set을 붙이면 함수를 프로퍼티화 시켜준다고 생각하면 됩니다. getter와 setter로 부릅니다.
+    // get을 사용할때는 return이 꼭 있어야 합니다. 무언가를 꺼내야 하기 때문에 리턴받는 값이 꼭 있어야 합니다. 그리고 get은 파라미터를 입력하면 안됩니다.
+    // set을 사용할때는 파라미터가 1개가 있어야 합니다.
+
+    // class에서 get과 set 사용하기
+    class Product {
+      constructor() {
+        this.name = "Park";
+        this.age = 20;
+      }
+      get getAge() {
+        return this.age + 1;
+      }
+      set setAge(age) {
+        this.age += age;
+      }
+    }
+
+    var product = new Product();
+
+    product.setAge = 25;
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Constructor & Prototype</title>
+</head>
+<body>
+  <h1>Constructor & Prototype</h1>
+  <script>
+    /*
+      constructor 사용 예
+      1. object를 마구 복사하고 싶을때 사용합니다.
+      2. 비슷한 object를 여러개 생성할 때 사용합니다.
+    */
+    var people = {
+      name: "Kim",
+      age: 15,
+      sayHi: function () {
+        console.log(`안녕하세요. ${this.name}입니다.`)
+      }
+    };
+
+    people.sayHi();
+
+    // function은 constructor를 만들때도 사용합니다. constructor를 생성할때는 대문자를 사용합니다. ( 관습 )
+    // constructor내부에서 사용하는 this는 새로 생성되는 object를 뜻합니다.
+    function Student(name, age) { // name을 넣지 않으면 undefined가 나옵니다.
+      this.name = name; // 새로 생성되는 object name에는 name을 대입해주세요.
+      this.age = age;
+      this.sayHi = function () {
+        console.log(`안녕하세요. ${this.name}입니다.`)
+      }
+    }
+    
+    // 오브젝트 생성
+    var student1 = new Student("Jun", 15); // student1이 Student로 부터 상속 받았다고 표현합니다. ( 즉, 생성자를 부모, 변수를 자식이라고 빗대어 부릅니다. )
+    var student2 = new Student("Park", 20);
+    student1.sayHi();
+
+    /*
+      용어 정리
+      constuctor에서 this: 생성자에서 새로 생성되는 object( instance: 새로 생성되는 오브젝트 !!! )
+    */
+
+    // prototype은 유전자라고 할 수 있습니다. 직역하면 원형입니다.
+    /*
+      아래처럼 생성자를 생성하면 prototype이라는 공간이 하나 생깁니다. ( 자동 )
+    */
+    function Product(name, age) {
+      this.name = name;
+      this.age = age;
+      this.sayHi = function () {
+        console.log(`안녕하세요. ${this.name}입니다.`)
+      }
+    }
+
+    // 프로토타입에 젠더를 추가합니다. 이렇게 prototype에 값을 추가하면 모든 자식들이 물려받을 수 있습니다.
+    Product.prototype.gender = "남";
+
+    var product1 = new Product("Jun", 10);
+    var product2 = new Product("Hwang", 20);
+
+    /*
+      prototype의 동작원리
+      product1.gender를 내가 직접 가지고 있는지 Product를 검사를 합니다. gender라는 값이 없으면 그 다음인 부모 유전자 (prototype)을 검사합니다. 그리고 거기에 있다면 실행해줍니다.
+    */
+
+    var arr = [1, 2, 3];
+    // 실제 array가 만들어지는 방식
+    var arr = new Array(1, 2, 3);
+
+    var objec = { name: "Kim" };
+    // 실제 ojbect가 만들어지는 방식
+    var objec = new Object();
+
+    /*
+      prototype은 함수에만 생성됩니다.
+      그렇기 때문에 product1은 product1.prototype을 사용할 수 없습니다.
+      대신 product1.__proto__가 있습니다. ( 부모의 유전자(prototype)를 검사하고 싶을때 사용할 수 있습니다. )
+      product1.__proto__와 Product.prototype는 같은것을 출력합니다.
+    */
+
+    // __proto__를 이용해 부모 강제 등록하기
+    var parents = { name: "Kim" };
+    var child = {};
+    
+    child.__proto__ = parents;
+
+    child.name; // Kim
+  </script>
+</body>
+</html>

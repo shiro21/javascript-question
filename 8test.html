@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Constructor 문제 & Prototype 문제</title>
+</head>
+<body>
+  <script>
+
+    // var product1 = { name: "shirts", price: 50000 };
+    // var product1 = { name: "pants", price: 60000 };
+
+    function Product (name, price) {
+      this.name = name;
+      this.price = price;
+      this.surtax = function () {
+        console.log(`${price / 10} 부가세가 포함됩니다.`)
+        console.log(`${price * 0.1} 부가세가 포함됩니다.`)
+      }
+    }
+
+    var product1 = new Product("shirts", 50000);
+    var product2 = new Product("pants", 60000);
+
+    // var student1 = { name: "Kim", age: 20 };
+    // var student1 = { name: "Park", age: 21 };
+    // var student1 = { name: "Lee", age: 22 };
+
+    function Student (name, age) {
+      this.name = name;
+      this.age = age;
+      this.sayHi = function () {
+        console.log(`안녕 나는 ${name}이야`);
+      }
+    }
+
+    var student1 = new Student("Kim", 20);
+    var student2 = new Student("Park", 21);
+    var student3 = new Student("Lee", 22);
+
+    
+    function Parent() {
+      this.name = "Kim";
+    }
+    var a = new Parent();
+
+    a.__proto__.name = "Park";
+
+    // a.__proto__.name = "Park"는 a의 부모에게 Park를 추가해준 내용입니다. 그렇기 때문에 a.name은 그대로 Kim을 가지고 있습니다. 그런데 만약 this.name이 Parent 안에 없었다면 Park를 출력했을 것입니다.
+    console.log(a.name); // Kim
+
+    /*
+      아래처럼 sayHi()함수를 Arrow Function을 사용해서 this.name을 출력하게되면 상위 this를 불러와주기 때문에 this.name이 window를 불러오게 될 것입니다. 
+      그래서 this.name을 Parent에서 불러와주기 위해서는 function함수를 사용해서 불러와줘야 합니다.
+    */
+    // this.name이 안불러와지는 예
+    Parent.prototype.sayHi = () => {
+      console.log(this);
+      console.log(`안녕 나는 ${this.name}이야.`);
+    }
+    // this.name을 불러오는 예
+    Parent.prototype.sayHi = function () {
+      console.log(this);
+      console.log(`안녕 나는 ${this.name}이야.`);
+    }
+    var parent = new Parent();
+    parent.sayHi()
+
+    var arr = [1, 2, 3];
+
+    arr.__proto__.remove3 = function () {
+      arr.pop()
+    }
+    arr.remove3();
+    console.log(arr);
+
+    // or
+    var array123 = [1, 2, 3, 4,  5, 6, 7, 8, 9, 0, 1, 3, 4, 5, 6, 7, 8,2, 3, 4, 45,434 ,23,3, 3, 3, 3, 3, 3,3, 3, 3, 4];
+
+    Array.prototype.remove4 = function () {
+      // 여기서의 this는 Array의 원소들을 뜻합니다.
+      console.log(this);
+      // 이렇게하면 this.length가 점점 줄어들기 때문에 끝까지 가지 못합니다.
+      // for (let i = 0; i < this.length; i++) {
+      //   if (this[i] === 3) {
+      //     this.splice(i, 1);
+      //   }
+      // }
+
+      // 아니면 filter, find등 다른 내용을 사용할 수도있습니다.
+      let num = [];
+      for (let i = 0; i < array123.length; i++) {
+        if (array123[i] !== 3) {
+          num.push(array123[i]);
+        }
+      }
+
+      array123 = num;
+    }
+
+    array123.remove4();
+    console.log(array123);
+  </script>
+</body>
+</html>
