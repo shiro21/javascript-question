@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>import & export</title>
+</head>
+<body>
+  <h1>import & export</h1>
+
+  <!-- module을 사용하면 import를 사용할 수 있다. -->
+  <script type="module">
+    import ccc, { a, b as bbb } from "./12.js";
+    import c, * as hello from "./12.js";
+    
+    console.log(a);
+
+    // *을 사용하면 export 내용들을 다 불러옵니다. 반드시 as를 해줘야합니다. 하지만 default된 내용은 포함되지 않습니다. 그렇기 때문에 불러오려면 앞에 써줘야합니ㅏㄷ.
+    console.log(hello);
+    console.log(hello.a);
+    console.log(hello.b);
+    console.log(c);
+
+  </script>
+</body>
+</html>

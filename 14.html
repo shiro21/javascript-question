@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sync, Async & Callback</title>
+</head>
+<body>
+  <h1>sync/async & callback</h1>
+  <p>
+    Syncronous ( 싱크로노우스 ) 동기식<br />
+    - 한번에 코드 한줄씩 차례로 실행<br />
+    - 자바스크립트는 사실 병렬처리가 불가능합니다. 가능한 것처럼 보이는것<br />
+    <br />
+    Asynchronous ( 어싱크로노우스 ) 비동기식
+    - 비동기식처리를 도와주는 함수들이 존재 ( ex: setTimeout(), ajax )
+
+  </p>
+
+  <p>
+    자바스크립트는 브라우저의 특수성 때문에 비동기식으로 표현되는 것처럼 동작됩니다.<br />
+    setTimeout(), ajax, addEventListener 등등의 특수 함수들을 Web API로 빼준다음 실행하고 이후에 실행해주기 때문입니다.<br />
+    오래 걸리는 내용들을 뒤로 빼준다고 생각할 수 있습니다.<br />
+
+  </p>
+  <pre>
+    콜백함수: 함수안에 들어가는 함수
+    ex:
+    setTimeout(function () {console.log("콜백함수")}, 1000);
+    addEventListener("click", function () { console.log("콜백함수"); });
+    < 이렇게도 실행 가능 >
+    addEventListener("click", func);
+    function func() {}
+
+    // -------------------- //
+    
+    function firstFunc (secondFunc) {
+      console.log(1);
+      secondFunc();
+    }
+
+    function secondFunc () {
+      console.log(2);
+    }
+    /*
+      firstFunc()를 먼저 실행시키고 secondFunc()를 실행시키고 싶습니다.
+      그런데 firstFunc()에 setTimeout()함수같은게 들어가있어서 secondFunc()가 먼저 실행될 수 있습니다.
+    */
+    firstFunc();
+    secondFunc();
+
+    /*
+      이럴때 아래처럼 firstFunc()안에 secondFunc()를 넣어주는 방법이 있습니다.
+      콜백함수를 이용한 함수 디자인
+    */
+    firstFunc(secondFunc);
+
+    < 이렇게도 사용할 수는 있습니다. >
+    firstFunc(function() { secondFunc() { 계속 안으로 들어가서 콜백함수를 사용할 수 있습니다. } });
+
+    < 그런데 위처럼 사용하면 코드가 어려워지고 더러워지기 때문에 프로미스 같은 내용을 사용합니다. >
+  </pre>
+  <script>
+
+  </script>
+</body>
+</html>

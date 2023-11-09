@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>for in / for of / enumerable, iterable 속성</title>
+</head>
+<body>
+  <h1>for in / for of 반복문과 enumerable, iterable 속성</h1>
+
+  <script>
+
+    class Parent {
+
+    }
+
+    Parent.prototype.name = "Park";
+
+    /*
+        for 반복문
+        forEach() 반복문: Array전용
+        for in 반복문: Object전용
+        for of 반복문: iterable전용
+
+        반복문은
+        1. 코드를 여러번 실행할 때 사용합니다.
+        2. Array, Object에서 자료를 꺼내쓸 때 사용합니다.
+    */
+    var obj = { name: "Kim", age: 30 };
+    var obj2 = new Parent();
+
+    // for (let i = 0; i < 3; i++) {
+
+    // }
+
+    // [1, 2, 3].forEach(el => {
+
+    // })
+
+    // for in: Object에 있던 값을 전부 하나씩 꺼내서 사용할 때
+    // obj: 내가 반복시킬 오브젝트
+    /*
+      enumerable( 이뉴머러블 )한 것만 반복해줍니다.
+      1. 오브젝트에는 숨겨진 정보들이 있습니다. Object.getOwnPropertyDescriptor(obj, "name");를 하면 name의 숨겨진 정보들이 출력됩니다.
+      - enumerable: 셀 수 있는지 여부( 반복문을 사용할 수 있는가에 대한 내용입니다. )
+      2. 부모의 prototype도 반복해줍니다. obj2에 부모 유전자를 추가했을때 부모의 유전자까지 반복해줍니다.
+      - 내가 가진 값만 반복시키고 싶으면 obj2.hasOwnProperty(key)를 반복시켜줍니다.
+    */
+    Object.getOwnPropertyDescriptor(obj, "name");
+    for (let key in obj) {
+      console.log(key); // name, age
+      console.log(obj[key]); // Kim, 30
+    }
+
+    // 오브젝트를 출력할때 사용합니다. ( 대부분 )
+    for (let key in obj2) {
+      // 내가 가진 값만 반복시킬때 사용합니다. ( 현재는 내가 가진건 아무것도 없기 때문에 나오는거 없습니다. )
+      if (obj2.hasOwnProperty(key)) {
+        console.log(obj2[key]);
+      }
+      console.log(obj2[key]);
+    }
+
+    /*
+      for of 반복문: Array, String, arguments, NodeList, Map, Set에 사용합니다.
+      1. iterable한 자료형에만 사용가능합니다.
+
+      NodeList: document.getElemetsByClassName();, document.querySelectorAll(); 등을 사용하면 Array 비슷한 [] 내용이 남습니다. 여기서 [] 이것들을 NodeList라고 합니다.
+
+    */
+   var arr = [2, 3, 4, 5];
+   var str = "ASDASDASDSD";
+    // arr, str
+    for (let el of str) {
+      console.log(el)
+    }
+    // 그냥 이런게 있다고만 알아도 무방합니다. ( 몰라도 됩니다. )
+    arr[Symbol.iterator]();
+
+    // 구구단
+    let table = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    for (let front of table) {
+      for (let back of table) {
+        console.log(front + "*" + back + "= " + front * back);
+      }
+    }
+
+    var products = [
+      {
+        name1: "chair",
+        price1: 7000,
+      },
+      {
+        name2: "sofa",
+        price1: 5000,
+      },
+      {
+        name1: "desk",
+        price3: 9000,
+      }
+    ]
+
+    for (let key of products) {
+      for (let a in key) {
+        // console.log(a);
+        let b = [...a];
+
+        for (let i = 0; i < b.length; i++) {
+          console.log(1)
+          if (parseInt(b[i])) {
+            console.log(2)
+            console.log(key.slice(0, -1))
+          }
+        }
+
+      }
+    }
+  </script>
+</body>
+</html>

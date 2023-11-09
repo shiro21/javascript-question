@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>async/await</title>
+</head>
+<body>
+  <h1>Async / Awiat </h1>
+  <p>
+    2017년에 나온 async / await ES8문법
+  </p>
+  
+  <button id="btn">Click</button>
+  <script>
+
+    // 기본
+    function sum (callback) {
+      1 + 1;
+
+      callback();
+    }
+
+    sum(callback);
+
+    function callback() {
+      console.log("양호");
+    } 
+
+    // promise
+    var promise = new Promise(function (resolve, reject) {
+      var ss = 1 + 1;
+      resolve(ss);
+    })
+    
+    promise
+    .then(function (ss) {
+      console.log(ss);
+    }).catch()
+
+    // async / await
+
+    // async는 함수 앞에만 붙일 수 있습니다. ( 함수 실행 후에 promise 오브젝트가 남습니다. )
+    async function sum3() {
+      // 연산결과를 내보내려면 return을 붙입니다.
+      return 1 + 1;
+
+      // 일부러 에러를 내보낼때
+      // return Promise.reject();
+    }
+
+    // async만 사용하면 이렇게 .then을 붙일 수 있습니다.
+    sum3()
+    .then(res => {
+      console.log(res, "성공!");
+    })
+    .catch(err => console.log("에러"));
+
+
+    async function sum4() {
+      var promise = new Promise(function(resolve, reject) {
+        var calculation = 1 + 1;
+        resolve(calculation);
+
+        // reject()
+      });
+
+      // promise
+      // .then(res => {
+      //   console.log(res, "성공");
+      // })
+      // .catch(err => console.log("에러"));
+
+      // 위 내용과 같습니다. ( promise.then().catch()부분 )
+      // try catch문으로 에러가 나면 catch를 실행해 달라는 내용입니다.
+      try {
+        var result = await promise;
+  
+        console.log(result);
+      } catch {
+        console.log("에러")
+      }
+    }
+
+
+    async function btnAdd() {
+      var promise = new Promise(function (resolve, reject) {
+        document.getElementById("btn").addEventListener("click", function () {
+          // console.log("성공");
+          resolve("성공");
+        })
+      })
+
+      try {
+        var result = await promise;
+  
+        console.log(result);
+      } catch {
+        console.log("에러");
+      }
+
+    }
+
+    btnAdd();
+  </script>
+</body>
+</html>

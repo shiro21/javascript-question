@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stack, Queue</title>
+</head>
+<body>
+  <h1>Stack & Queue 이벤트 루프?</h1>
+  <p>
+    간다하게 말하면 브라우저 작동원리라고 보면 됩니다.<br />
+    브라우저에 스택과 큐, 대기실( Web API )이 있습니다.<br />
+    자바스크립트는 싱글스레드 기반 언어입니다<br />
+    스택에서 자바스크립트를 실행해주는데, 한줄한줄 실행해줍니다.<br />
+    그런데 여기서 변수같은 내용을 만나면 힙이라는 공간에서 변수를 가져다 쓰고, ajax, setTimeout()함수같은 내용을 보면 옆 대기실로 빼내줍니다.<br />
+    그리고 이제 스택이 다 실행이되면 대기실에 있던 내용들을 큐로 보내고 큐에서 하나씩 스택으로 올려줍니다. 그리고 이제 스택에서 다시 처리하고 다시 큐에서 스택으로 올리고를 반복해서 완료를 해줍니다.<br />
+
+
+  </p>
+  <script>
+
+  </script>
+</body>
+</html>

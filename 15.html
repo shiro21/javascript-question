@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise ( 프로미스 )</title>
+</head>
+<body>
+  <h1>Promise ( 프로미스 )</h1>
+
+  <pre>
+    프로미스는 실패했을 때 내용을 뽑을 수 있습니다.
+    일반 콜백함수: 1번 실행 후 2번을 실행해주세요.
+    프로미스: 1번 실행 후 성공시 2번 실행해주세요. 실패시는 3번을 실행해주세요.
+
+    Promise의 3가지 상태
+    1. pending: 성공 실패 판정이 나지 않았을 때. ( 즉, 판정 대기중인 상태 )
+    2. resolved: 성공하고 났을 때.
+    3. rejected: 실패하고 났을 때.
+
+    프로미스는... 콜백함수 디자인의 대체품입니다.
+    프로미스가 적용된 곳들: fetch(), jQuery.ajax() 등
+    fetch().then().catch() << 이런식으로
+    
+  </pre>
+  <script>
+    var promise = new Promise(function(resolve, reject) {
+      var sum = 1 + 1;
+
+      resolve(sum);
+    });
+
+    promise
+    .then(function (sum) {
+      console.log(sum);
+    })
+    .catch(err => console.log("ERR", err));
+  </script>
+</body>
+</html>

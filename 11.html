@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destructuring문법</title>
+</head>
+<body>
+  <h1>Destructuring문법 ( 패턴 매칭 )</h1>
+  <p>
+
+  </p>
+
+  <script>
+    var arr = [2, 3, 4];
+
+    // 이렇게 각각의 데이터를 a = 2, b = 3, c = 4처럼 담을 수 있는 문법이 destructuring문법입니다. 아래 두개는 같습니다.
+    var [a, b, c] = [2, 3, 4];
+    var [a, b, c] = arr;
+
+    // 디폴트 변수를 지정도 가능합니다. ( 아무것도 안들어갈 때 넣어주는 변수 )
+    var [x, y, z = 10] = [2, 3];
+
+    // 오브젝트도 가능합니다.
+    var obj = { name: "Kim", age: 30 };
+    var { name, age = 31 } = { name: "Kim", age: 30 }; // name = Kim, age = 30
+
+    var { good: bye = "Park" } = { good: "Kim" }; // bye = Kim || good이라는 이름을 bye로 바꿔준 겁니다. good을치면 안나옵니다.
+
+    // 역발상 ( 변수들을 오브젝트에 집어넣고 싶은 경우 )
+    var aa = "Kim";
+    var bb = 30;
+
+    var obj2 = { aa, bb };
+
+    // 함수 파라미터 만들 때 디스트럭처링 사용하기
+    var obj3 = { name: "Kim", age: 30 };
+
+    function func({ name,  age }) {
+      console.log(name);
+      console.log(age);
+    }
+
+    func(obj3);
+
+    // Array를 넣는다면?
+    function func2([ name,  age ]) {
+      console.log(name); // 1
+      console.log(age); // 2
+    }
+
+    func2([1, 2]);
+  </script>
+</body>
+</html>

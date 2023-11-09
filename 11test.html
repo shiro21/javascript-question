@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destructuring문법 문제</title>
+</head>
+<body>
+  <script>
+    var [number, address] = [ 30, "Seoul" ];
+    var { address: a, number = 20 } = { address, number };
+
+    // a = 30, address = Seoul, number = 30
+
+    let information = {
+      body: {
+        height: 190,
+        weight: 70
+      },
+      size: ["상의 Large", "바지 30인치"]
+    };
+
+    let {
+      body: {
+        height,
+        weight,
+      },
+      size: [shirts, pants]
+    } = information
+  </script>
+</body>
+</html>
